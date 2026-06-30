@@ -85,6 +85,6 @@ Sources/
   Theme.swift           Atlassian Design System tokens (color, type, buttons)
   HotKey.swift          global ⌘⇧V hotkey (Carbon, no permission needed)
   Paster.swift          ⌘V simulation for auto-paste (needs Accessibility)
-scripts/make_icon.swift  generates the app icon
+Icon.png                 app icon source (rendered to .icns by build.sh)
 build.sh                 compile → sign → install
 ```
