@@ -41,7 +41,7 @@ struct QueueView: View {
                         .foregroundStyle(.white)
                 )
 
-            Text("Paste Queue")
+            Text("Pasties")
                 .font(.adsHeading)
                 .foregroundStyle(ADS.text)
 

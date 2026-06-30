@@ -1,6 +1,6 @@
 import SwiftUI
 
-/// Atlassian Design System tokens (light theme), used to give SpiraPaste an
+/// Atlassian Design System tokens (light theme), used to give Pasties an
 /// authentic Atlassian look. Values mirror the ADS color palette and type scale.
 /// https://atlassian.design/foundations
 enum ADS {

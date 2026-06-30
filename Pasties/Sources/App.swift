@@ -2,7 +2,7 @@ import SwiftUI
 import Carbon.HIToolbox
 
 @main
-struct SpiraPasteApp: App {
+struct PastiesApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
     @StateObject private var queue = ClipboardQueue.shared
 

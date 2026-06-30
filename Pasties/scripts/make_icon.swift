@@ -1,4 +1,4 @@
-// Renders the SpiraPaste app icon (Atlassian-blue squircle + stacked clipboard queue) to PNGs.
+// Renders the Pasties app icon (Atlassian-blue squircle + stacked clipboard queue) to PNGs.
 // Usage: swift make_icon.swift <output-dir>
 import AppKit
 

@@ -1,4 +1,4 @@
-# SpiraPaste
+# Pasties
 
 A tiny macOS **menu bar clipboard queue** — copy several things, then paste them
 one at a time in quick succession. Inspired by
@@ -34,13 +34,13 @@ You need Apple's **Command Line Tools** (you already have them if you've built
 other SpiraOS apps). If not: `xcode-select --install`.
 
 ```sh
-git clone https://github.com/jonasspira/SpiraPaste.git
-cd SpiraPaste
+git clone https://github.com/jonasspira/Pasties.git
+cd Pasties
 ./build.sh
 ```
 
 `build.sh` compiles the app, renders the icon, ad-hoc signs it, and installs
-**SpiraPaste.app** to `/Applications`. Launch it from there — the icon appears
+**Pasties.app** to `/Applications`. Launch it from there — the icon appears
 in your menu bar.
 
 > Because it's built locally on your own machine, macOS Gatekeeper doesn't block
