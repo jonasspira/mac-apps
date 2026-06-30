@@ -53,6 +53,20 @@ in your menu bar.
 2. Click into wherever you want to paste.
 3. Press `⌘⇧V` for each item, in order.
 
+## Design
+
+Styled to the [Atlassian Design System](https://atlassian.design/foundations)
+foundations:
+
+- **Color** — brand blue `#0C66E4` for primary actions, navy `#172B4D` text,
+  neutral grays (`#F7F8F9` / `#DCDFE4`), and `#C9372C` for destructive actions.
+- **Type** — Atlassian's product UI uses the OS system font stack (SF Pro on
+  macOS), with ADS's 14px body / 16px semibold heading scale. (Atlassian's
+  proprietary *Charlie Sans* brand font can't be redistributed, so we use the
+  same system-font approach their products do.)
+- **Components** — ADS-style badges, keycap lozenges, subtle hover states, and
+  primary/subtle buttons. Tokens live in `Sources/Theme.swift`.
+
 ## Notes
 
 - The queue holds **text**. Images/files aren't queued (could be added later).
@@ -67,7 +81,8 @@ in your menu bar.
 Sources/
   App.swift             @main entry, menu bar scene, global hotkey wiring
   ClipboardQueue.swift  clipboard monitoring + the queue model
-  QueueView.swift       the popover UI
+  QueueView.swift       the popover UI (Atlassian-styled)
+  Theme.swift           Atlassian Design System tokens (color, type, buttons)
   HotKey.swift          global ⌘⇧V hotkey (Carbon, no permission needed)
   Paster.swift          ⌘V simulation for auto-paste (needs Accessibility)
 scripts/make_icon.swift  generates the app icon

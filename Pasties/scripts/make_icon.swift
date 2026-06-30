@@ -1,4 +1,4 @@
-// Renders the SpiraPaste app icon (indigo squircle + stacked clipboard queue) to PNGs.
+// Renders the SpiraPaste app icon (Atlassian-blue squircle + stacked clipboard queue) to PNGs.
 // Usage: swift make_icon.swift <output-dir>
 import AppKit
 
@@ -16,12 +16,13 @@ func render(size: Int, scale: Int, name: String) {
     let u = CGFloat(px)
     let full = NSRect(x: 0, y: 0, width: px, height: px)
 
-    // macOS-style rounded-square background with a blue→indigo gradient.
+    // macOS-style rounded-square background with the Atlassian blue gradient
+    // (Blue500 #2684FF → Blue700 #0C66E4).
     let margin = u * 0.09
     let squircle = roundedRect(full.insetBy(dx: margin, dy: margin), radius: u * 0.185)
     let bg = NSGradient(colors: [
-        NSColor(calibratedRed: 0.36, green: 0.52, blue: 1.00, alpha: 1),
-        NSColor(calibratedRed: 0.30, green: 0.24, blue: 0.86, alpha: 1),
+        NSColor(calibratedRed: 0.149, green: 0.518, blue: 1.000, alpha: 1),
+        NSColor(calibratedRed: 0.047, green: 0.400, blue: 0.894, alpha: 1),
     ])!
     bg.draw(in: squircle, angle: -90)
 
@@ -45,11 +46,11 @@ func render(size: Int, scale: Int, name: String) {
     let clipW = cardW * 0.42, clipH = u * 0.06
     let clip = NSRect(x: front.midX - clipW / 2, y: front.maxY - clipH * 0.55,
                       width: clipW, height: clipH)
-    NSColor(calibratedRed: 0.30, green: 0.24, blue: 0.86, alpha: 1).setFill()
+    NSColor(calibratedRed: 0.000, green: 0.333, blue: 0.800, alpha: 1).setFill()
     roundedRect(clip, radius: clipH * 0.5).fill()
 
     // Three "lines of text" on the front card.
-    let lineColor = NSColor(calibratedRed: 0.30, green: 0.24, blue: 0.86, alpha: 1)
+    let lineColor = NSColor(calibratedRed: 0.000, green: 0.333, blue: 0.800, alpha: 1)
     lineColor.setFill()
     for (i, frac) in [0.62, 0.45, 0.28].enumerated() {
         let w = cardW * (i == 2 ? 0.45 : 0.66)
