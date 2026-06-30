@@ -37,7 +37,7 @@ cat > "$APP/Contents/Info.plist" <<'PLIST'
 </plist>
 PLIST
 
-echo "▸ Building app icon from Icon.png (macOS-aligned padding)…"
+echo "▸ Building app icon from Icon.png (full-bleed)…"
 swift scripts/make_icon.swift Icon.png build/AppIcon.iconset >/dev/null
 iconutil -c icns build/AppIcon.iconset -o "$APP/Contents/Resources/AppIcon.icns"
 
