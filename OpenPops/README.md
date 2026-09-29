@@ -175,4 +175,4 @@ docs/                      Screenshots used in this README
 - `swift test` runs the core tests. They also run on Linux.
 - `./build.sh` builds the app; `scripts/self-test.sh` then renders every part of the UI to `build/self-test/` and checks that Dock tiles respond to clicks.
 - CI builds a universal app on a macOS runner for every push, runs both, and uploads the app and the screenshots as artifacts on the [Build workflow page](https://github.com/jonasspira/openpops/actions/workflows/build.yml).
-- To publish a release, set `VERSION` in `build.sh`, commit, and push a matching tag, such as `v1.1.0`. CI then attaches `OpenPops.zip` to a new GitHub Release.
+- To publish a release, set `VERSION` in `build.sh` and commit it. Then open the [Build workflow page](https://github.com/jonasspira/openpops/actions/workflows/build.yml), click **Run workflow**, tick **Publish a release** and run it. CI builds the app and attaches `OpenPops.zip` to a new GitHub Release named after the version. Pushing a matching tag, such as `v1.1.0`, does the same.

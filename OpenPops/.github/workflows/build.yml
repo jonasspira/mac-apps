@@ -1,8 +1,10 @@
 name: Build
 
 # Builds and tests OpenPops on a macOS runner.
-# Every run uploads OpenPops.zip as an artifact. Pushing a tag like v1.0.0
-# also publishes it as a GitHub Release.
+# Every run uploads OpenPops.zip as an artifact.
+# To publish a GitHub Release for the VERSION in build.sh, run this workflow by
+# hand (Actions > Build > Run workflow) with "Publish a release" ticked, or push
+# a matching tag like v1.0.0.
 
 on:
   push:
@@ -10,6 +12,11 @@ on:
     tags: ['v*']
   pull_request:
   workflow_dispatch:
+    inputs:
+      publish:
+        description: 'Publish a release for the version set in build.sh'
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -52,12 +59,14 @@ jobs:
           if-no-files-found: ignore
 
   release:
-    if: startsWith(github.ref, 'refs/tags/v')
+    if: startsWith(github.ref, 'refs/tags/v') || inputs.publish
     needs: build
     runs-on: ubuntu-latest
     permissions:
       contents: write
     steps:
+      - uses: actions/checkout@v7
+
       - uses: actions/download-artifact@v8
         with:
           name: OpenPops-app
@@ -66,7 +75,19 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh release create "$GITHUB_REF_NAME" OpenPops.zip \
+          version="$(sed -n 's/^VERSION="\(.*\)"$/\1/p' build.sh)"
+          tag="v$version"
+          if [ -z "$version" ]; then
+            echo "Couldn't read VERSION from build.sh" >&2
+            exit 1
+          fi
+          if [ "$GITHUB_REF_TYPE" = tag ] && [ "$GITHUB_REF_NAME" != "$tag" ]; then
+            echo "Tag $GITHUB_REF_NAME doesn't match VERSION=$version in build.sh" >&2
+            exit 1
+          fi
+          # Creates the tag at this commit if it doesn't exist yet.
+          gh release create "$tag" OpenPops.zip \
             --repo "$GITHUB_REPOSITORY" \
-            --title "OpenPops ${GITHUB_REF_NAME#v}" \
+            --target "$GITHUB_SHA" \
+            --title "OpenPops $version" \
             --notes "Download OpenPops.zip below, unzip it and move OpenPops.app to Applications. It's signed ad hoc, not notarized, so the first time you open it, go to System Settings → Privacy & Security and click Open Anyway. See the README for details."
