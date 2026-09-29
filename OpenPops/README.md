@@ -54,32 +54,32 @@ These screenshots come from the automated test run on a macOS 26 GitHub runner.
 
 ## Install
 
-### Build it yourself (recommended)
+### Download
+
+Get **OpenPops.zip** from the [latest release](https://github.com/jonasspira/openpops/releases/latest). It runs on Apple silicon and Intel Macs.
+
+OpenPops is signed ad hoc, not notarized with Apple (that needs a paid developer account), so macOS blocks it the first time:
+
+1. Unzip it and move `OpenPops.app` to `/Applications`.
+2. Open it. macOS says it can't verify the developer.
+3. Go to **System Settings → Privacy & Security**, scroll down and click **Open Anyway**.
+
+Or run `xattr -dr com.apple.quarantine /Applications/OpenPops.app` once.
+
+### Or build it yourself
 
 You only need Apple's free Command Line Tools, not the full Xcode.
 
 ```bash
 xcode-select --install          # once, if you don't have the tools yet
-git clone https://github.com/jonasspira/jonasspira.github.io.git
-cd jonasspira.github.io/openpops
+git clone https://github.com/jonasspira/openpops.git
+cd openpops
 ./build.sh --install
 ```
 
 `--install` copies `OpenPops.app` to `/Applications` (or `~/Applications` if that isn't writable) and opens it. Without it, the app is left in `build/OpenPops.app`.
 
 An app you build yourself opens without Gatekeeper warnings.
-
-### Or download a build
-
-Every push that touches `openpops/` is built by GitHub Actions. Open the latest run on the [OpenPops workflow page](https://github.com/jonasspira/jonasspira.github.io/actions/workflows/openpops.yml) and download the `OpenPops-app` artifact (you need to be signed in to GitHub). Pushing a tag like `openpops-v1.0.0` also publishes the zip as a GitHub Release.
-
-These builds are signed ad hoc, not notarized, so macOS blocks them the first time:
-
-1. Unzip and move `OpenPops.app` to `/Applications`.
-2. Open it. macOS says it can't verify the developer.
-3. Go to **System Settings → Privacy & Security**, scroll down and click **Open Anyway**.
-
-Or run `xattr -dr com.apple.quarantine /Applications/OpenPops.app` once.
 
 ## Using it
 
@@ -160,17 +160,19 @@ Settings → Data has Export and Import.
 ## Development
 
 ```
-openpops/
-  Package.swift           Swift package: OpenPopsCore library, OpenPops app, tests
-  Sources/OpenPopsCore/   Models, JSON storage, layout and placement math, themes (Foundation only)
-  Sources/OpenPops/       The app: AppKit popover, Dock tiles, SwiftUI Organizer
-  Tests/                  Unit tests for OpenPopsCore
-  Resources/              Info.plist template and app icon
-  build.sh                Builds and signs OpenPops.app
-  scripts/self-test.sh    Runs the in-app self-test and a launch/reopen smoke test
-  scripts/make-icon.py    Draws the app icon (needs Pillow)
+Package.swift              Swift package: OpenPopsCore library, OpenPops app, tests
+Sources/OpenPopsCore/      Models, JSON storage, layout and placement math, themes (Foundation only)
+Sources/OpenPops/          The app: AppKit popover, Dock tiles, SwiftUI Organizer
+Tests/                     Unit tests for OpenPopsCore
+Resources/                 Info.plist template and app icon
+build.sh                   Builds and signs OpenPops.app
+scripts/self-test.sh       Runs the in-app self-test and a launch/reopen smoke test
+scripts/make-icon.py       Draws the app icon (needs Pillow)
+docs/                      Screenshots used in this README
+.github/workflows/build.yml  CI: tests, build, self-test, releases
 ```
 
 - `swift test` runs the core tests. They also run on Linux.
 - `./build.sh` builds the app; `scripts/self-test.sh` then renders every part of the UI to `build/self-test/` and checks that Dock tiles respond to clicks.
-- CI builds a universal app on a macOS runner, runs both, and uploads the app and the screenshots as artifacts.
+- CI builds a universal app on a macOS runner for every push, runs both, and uploads the app and the screenshots as artifacts on the [Build workflow page](https://github.com/jonasspira/openpops/actions/workflows/build.yml).
+- To publish a release, set `VERSION` in `build.sh`, commit, and push a matching tag, such as `v1.1.0`. CI then attaches `OpenPops.zip` to a new GitHub Release.

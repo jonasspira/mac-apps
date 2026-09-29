@@ -31,7 +31,7 @@ enum AppInfo {
     static let mainAppPathKey = "OPMainAppPath"
     static let buildIDKey = "OPBuildID"
     static let urlScheme = "openpops"
-    static let readmeURL = URL(string: "https://github.com/jonasspira/jonasspira.github.io/tree/main/openpops#readme")!
+    static let readmeURL = URL(string: "https://github.com/jonasspira/openpops#readme")!
 
     static var version: String {
         Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "dev"
