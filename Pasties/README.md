@@ -6,7 +6,7 @@ one at a time in quick succession. Inspired by
 installable without the App Store (handy on a company-managed Mac).
 
 No Xcode required — it builds from the command line with the same
-`swiftc` setup used across SpiraOS.
+`swiftc` setup used across SPIIIRA Apps.
 
 ## What it does
 
@@ -31,7 +31,7 @@ Accessibility permission (System Settings ▸ Privacy & Security ▸ Accessibili
 ## Install
 
 You need Apple's **Command Line Tools** (you already have them if you've built
-other SpiraOS apps). If not: `xcode-select --install`.
+other SPIIIRA Apps). If not: `xcode-select --install`.
 
 ```sh
 git clone https://github.com/jonasspira/Pasties.git
