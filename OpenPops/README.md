@@ -56,7 +56,7 @@ These screenshots come from the automated test run on a macOS 26 GitHub runner.
 
 ### Download
 
-Get **OpenPops.zip** from the [latest release](https://github.com/jonasspira/openpops/releases/latest). It runs on Apple silicon and Intel Macs.
+Get **OpenPops.zip** from the [latest release](https://github.com/jonasspira/OpenPops/releases/latest) (newer versions, if any, are on the [mac-apps releases page](https://github.com/jonasspira/mac-apps/releases)). It runs on Apple silicon and Intel Macs.
 
 OpenPops is signed ad hoc, not notarized with Apple (that needs a paid developer account), so macOS blocks it the first time:
 
@@ -72,8 +72,8 @@ You only need Apple's free Command Line Tools, not the full Xcode.
 
 ```bash
 xcode-select --install          # once, if you don't have the tools yet
-git clone https://github.com/jonasspira/openpops.git
-cd openpops
+git clone https://github.com/jonasspira/mac-apps.git
+cd mac-apps/OpenPops
 ./build.sh --install
 ```
 
@@ -169,10 +169,10 @@ build.sh                   Builds and signs OpenPops.app
 scripts/self-test.sh       Runs the in-app self-test and a launch/reopen smoke test
 scripts/make-icon.py       Draws the app icon (needs Pillow)
 docs/                      Screenshots used in this README
-.github/workflows/build.yml  CI: tests, build, self-test, releases
+../.github/workflows/openpops.yml  CI: tests, build, self-test, releases
 ```
 
 - `swift test` runs the core tests. They also run on Linux.
 - `./build.sh` builds the app; `scripts/self-test.sh` then renders every part of the UI to `build/self-test/` and checks that Dock tiles respond to clicks.
-- CI builds a universal app on a macOS runner for every push, runs both, and uploads the app and the screenshots as artifacts on the [Build workflow page](https://github.com/jonasspira/openpops/actions/workflows/build.yml).
-- To publish a release, set `VERSION` in `build.sh` and commit it. Then open the [Build workflow page](https://github.com/jonasspira/openpops/actions/workflows/build.yml), click **Run workflow**, tick **Publish a release** and run it. CI builds the app and attaches `OpenPops.zip` to a new GitHub Release named after the version. Pushing a matching tag, such as `v1.1.0`, does the same.
+- CI builds a universal app on a macOS runner for every push that changes this folder, runs both, and uploads the app and the screenshots as artifacts on the [OpenPops workflow page](https://github.com/jonasspira/mac-apps/actions/workflows/openpops.yml).
+- To publish a release, set `VERSION` in `build.sh` and commit it. Then open the [OpenPops workflow page](https://github.com/jonasspira/mac-apps/actions/workflows/openpops.yml), click **Run workflow**, tick **Publish a release** and run it. CI builds the app and attaches `OpenPops.zip` to a new GitHub Release named after the version. Pushing a matching tag, such as `openpops-v1.1.0`, does the same.

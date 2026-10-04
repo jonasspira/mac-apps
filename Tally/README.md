@@ -1,6 +1,6 @@
 # Tally
 
-A notepad that calculates — a Soulver-style calculator for Mac, part of SPIIIRA Apps.
+A notepad that calculates — a Soulver-style calculator for Mac, part of [mac-apps](https://github.com/jonasspira/mac-apps).
 
 ## Download & Install
 

@@ -1,20 +1,26 @@
-name: Build
+name: OpenPops
 
-# Builds and tests OpenPops on a macOS runner.
-# Every run uploads OpenPops.zip as an artifact.
-# To publish a GitHub Release for the VERSION in build.sh, run this workflow by
-# hand (Actions > Build > Run workflow) with "Publish a release" ticked, or push
-# a matching tag like v1.0.0.
+# Builds and tests OpenPops (the OpenPops/ folder) on a macOS runner whenever
+# something in that folder changes. Every run uploads OpenPops.zip as an artifact.
+# To publish a GitHub Release for the VERSION in OpenPops/build.sh, run this
+# workflow by hand (Actions > OpenPops > Run workflow) with "Publish a release"
+# ticked, or push a matching tag like openpops-v1.0.1.
 
 on:
   push:
     branches: ['**']
-    tags: ['v*']
+    tags: ['openpops-v*']
+    paths:
+      - 'OpenPops/**'
+      - '.github/workflows/openpops.yml'
   pull_request:
+    paths:
+      - 'OpenPops/**'
+      - '.github/workflows/openpops.yml'
   workflow_dispatch:
     inputs:
       publish:
-        description: 'Publish a release for the version set in build.sh'
+        description: 'Publish a release for the version set in OpenPops/build.sh'
         type: boolean
         default: false
 
@@ -25,6 +31,9 @@ jobs:
   build:
     runs-on: macos-26
     timeout-minutes: 40
+    defaults:
+      run:
+        working-directory: OpenPops
     steps:
       - uses: actions/checkout@v7
 
@@ -47,7 +56,7 @@ jobs:
         uses: actions/upload-artifact@v7
         with:
           name: OpenPops-app
-          path: build/OpenPops.zip
+          path: OpenPops/build/OpenPops.zip
           if-no-files-found: error
 
       - name: Upload self-test output
@@ -55,11 +64,11 @@ jobs:
         uses: actions/upload-artifact@v7
         with:
           name: OpenPops-self-test
-          path: build/self-test
+          path: OpenPops/build/self-test
           if-no-files-found: ignore
 
   release:
-    if: startsWith(github.ref, 'refs/tags/v') || inputs.publish
+    if: startsWith(github.ref, 'refs/tags/openpops-v') || inputs.publish
     needs: build
     runs-on: ubuntu-latest
     permissions:
@@ -75,14 +84,14 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          version="$(sed -n 's/^VERSION="\(.*\)"$/\1/p' build.sh)"
-          tag="v$version"
+          version="$(sed -n 's/^VERSION="\(.*\)"$/\1/p' OpenPops/build.sh)"
+          tag="openpops-v$version"
           if [ -z "$version" ]; then
-            echo "Couldn't read VERSION from build.sh" >&2
+            echo "Couldn't read VERSION from OpenPops/build.sh" >&2
             exit 1
           fi
           if [ "$GITHUB_REF_TYPE" = tag ] && [ "$GITHUB_REF_NAME" != "$tag" ]; then
-            echo "Tag $GITHUB_REF_NAME doesn't match VERSION=$version in build.sh" >&2
+            echo "Tag $GITHUB_REF_NAME doesn't match VERSION=$version in OpenPops/build.sh" >&2
             exit 1
           fi
           # Creates the tag at this commit if it doesn't exist yet.
@@ -90,4 +99,4 @@ jobs:
             --repo "$GITHUB_REPOSITORY" \
             --target "$GITHUB_SHA" \
             --title "OpenPops $version" \
-            --notes "Download OpenPops.zip below, unzip it and move OpenPops.app to Applications. It's signed ad hoc, not notarized, so the first time you open it, go to System Settings → Privacy & Security and click Open Anyway. See the README for details."
+            --notes "Download OpenPops.zip below, unzip it and move OpenPops.app to Applications. It's signed ad hoc, not notarized, so the first time you open it, go to System Settings → Privacy & Security and click Open Anyway. See OpenPops/README.md for details."

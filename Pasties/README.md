@@ -6,7 +6,7 @@ one at a time in quick succession. Inspired by
 installable without the App Store (handy on a company-managed Mac).
 
 No Xcode required — it builds from the command line with the same
-`swiftc` setup used across SPIIIRA Apps.
+`swiftc` setup used across [mac-apps](https://github.com/jonasspira/mac-apps).
 
 ## What it does
 
@@ -31,11 +31,11 @@ Accessibility permission (System Settings ▸ Privacy & Security ▸ Accessibili
 ## Install
 
 You need Apple's **Command Line Tools** (you already have them if you've built
-other SPIIIRA Apps). If not: `xcode-select --install`.
+other apps in mac-apps). If not: `xcode-select --install`.
 
 ```sh
-git clone https://github.com/jonasspira/Pasties.git
-cd Pasties
+git clone https://github.com/jonasspira/mac-apps.git
+cd mac-apps/Pasties
 ./build.sh
 ```
 

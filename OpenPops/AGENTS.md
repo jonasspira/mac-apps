@@ -1,32 +1,21 @@
 # OpenPops
 
 Folders of apps, files and links in the Mac's Dock; a free take on DockPops.
-Part of SPIIIRA Apps, Jonas's collection of Mac apps.
-
-## Working with Jonas
-
-- Jonas is not a programmer. Use plain language and give exact steps.
-- No emojis.
-- Ask before doing anything beyond the task.
+One of the apps in mac-apps. The rules in the top-level `AGENTS.md` apply here
+too.
 
 ## Building
 
-- A Swift package with no Xcode project. `./build.sh` builds
+- A Swift package with no Xcode project. From this folder, `./build.sh` builds
   `build/OpenPops.app`; `--install` also copies it to /Applications, `--zip`
-  writes `build/OpenPops.zip`.
-- GitHub Actions builds and tests it on a macOS runner for every push
-  (`.github/workflows/build.yml`). Cloud sessions can't build Mac apps
-  themselves, so check that workflow run instead of claiming a change works.
-- Releases: set `VERSION` in `build.sh` and commit it. Jonas then runs the
-  Build workflow by hand with "Publish a release" ticked (sessions can't push
-  tags).
+  writes `build/OpenPops.zip`. `swift test` runs the core tests, on Linux too.
+- GitHub Actions builds and tests it on a macOS runner whenever something in
+  this folder changes (`.github/workflows/openpops.yml` at the top of the
+  repository). Check that run instead of claiming a change works.
 
-## Housekeeping
+## Releases
 
-- Keep README.md current when behavior changes.
-- Several AI tools work on this repository (Claude, Codex, Muse). Start from the
-  latest `main`. When the work is done, commit it, and push it or open a pull
-  request when Jonas asks, so the next tool starts from it.
-- Cloud sessions may not be able to delete branches or push tags. Leave those to
-  Jonas.
-- Web tools belong in jonasspira/jonasspira.github.io, not here.
+- Set `VERSION` in `build.sh` and commit it. Jonas then runs the OpenPops
+  workflow by hand (Actions > OpenPops > Run workflow) with "Publish a release"
+  ticked. It creates the tag `openpops-v<version>` and the release
+  "OpenPops <version>". Sessions can't push tags.
